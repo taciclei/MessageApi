@@ -30,6 +30,18 @@ class MessagesCollection extends SplObjectStorage
 
         return $collection;
     }
+
+    function getMessageId(int $id): self
+    {
+        $collection = new MessagesCollection;
+        foreach ($this as $item) {
+            if ($item->id === $id) {
+                $collection->attach($item);
+            }
+        }
+
+        return $collection;
+    }
 }
 
 class MessageDto
@@ -184,8 +196,9 @@ $messages = $client->sendRequest($request);
 
 $ownerId = 2546;
 $tenantId = 1505;
-echo sprintf("J'ai %d messages au total ." . PHP_EOL, $messages->getResponse()->count());
-echo sprintf("Le propriétaire  %d avec %d messages au total ." . PHP_EOL, $ownerId, $messages->getResponse()->getOwnerId($ownerId)->count());
-echo sprintf("Le locataire  %d avec %d messages au total ." . PHP_EOL, $tenantId, $messages->getResponse()->getTenantId($tenantId)->count());
-var_dump($messages->getResponse());
+echo sprintf("J'ai %d messages au total ." . PHP_EOL, $messages->count());
+echo sprintf("Le propriétaire  %d avec %d messages au total ." . PHP_EOL, $ownerId, $messages->getOwnerId($ownerId)->count());
+echo sprintf("Le locataire  %d avec %d messages au total ." . PHP_EOL, $tenantId, $messages->getTenantId($tenantId)->count());
+echo sprintf("Message 48  %s ." . PHP_EOL, $messages->getMessageId(48)->current()->message);
+var_dump($messages);
 
