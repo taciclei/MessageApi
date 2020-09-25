@@ -145,17 +145,6 @@ class ClientApi
   }
 }';
     }
-
-    function getResponse(): MessagesCollection
-    {
-
-        $arrayUrl = explode('/', $this->getUrl());
-        $parser = end($arrayUrl);
-        $factory = (new MessagesParserFactory)->getInstance($parser);
-        $messages = $factory->getMessages($this->getBody());
-
-        return $messages;
-    }
 }
 
 class RequestApi
